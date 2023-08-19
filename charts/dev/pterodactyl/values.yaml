@@ -1,0 +1,44 @@
+app:
+  debug: false
+  service_author: "me@example.com"
+  tz: "UTC"
+  app_locale: "en"
+  app_key: ""
+  url: "https://panel.example.com"
+  trusted_proxies: "*" # restrict this to your proxy ip
+logs:
+  log_level: debug
+  log_channel: daily
+db:
+  database_connection: mysql
+  database_host: 127.0.0.1
+  database_port: 3306
+  database: "pterodactyl_panel"
+  database_user: "pterodactyl"
+  database_password: "changeme"
+redis:
+  redis_host: 127.0.0.1
+  redis_password: "changeme"
+  redis_port: 6379
+cache:
+  cache_driver: file
+  queue_connection: redis
+  session_driver: file
+mail:
+  mailer: smtp
+  host: smtp.example.com
+  port: 25
+  username: "changeme"
+  password: "changeme"
+  encryption: "tls"
+  mail_from_address: "no-reply@example.com"
+  mail_from_name: "Pterodactyl Panel"
+specs:
+  CPU:
+    requests: "300m"
+    limits: "500m"
+  Memory:
+    requests: "128Mi"
+    limits: "256Mi"
+
+#Github has options for Hash modifications. look at them at some point :)

@@ -1,0 +1,12 @@
+dependencies:
+- name: nginx
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.1.4
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 13.0.4
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 17.15.5
+digest: sha256:9193f9e8b63b200c2109019ea0cb0c7262ab05ba8d28327fb01799d4fedc69de
+generated: "2023-08-18T10:14:20.562437-05:00"

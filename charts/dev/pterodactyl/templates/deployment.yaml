@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pterodactyl-panel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pterodactyl-panel
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pterodactyl-panel
+      annotations:
+        deploy-date: "deploy-date-value"
+    spec:
+      containers:
+      - name: pterodactyl-panel
+        image: ghcr.io/pterodactyl/panel:latest
+        
+        resources:
+          requests:
+            memory: "{{ .Values.specs.Memory.requests }}"
+            cpu: "{{ .Values.specs.CPU.requests }}"
+          limits:
+            memory: "{{ .Values.specs.Memory.limits }}"
+            cpu: "{{ .Values.specs.CPU.limits }}"
+        
+        ports:
+          - containerPort: 80
+        
+        env:
+        # App settings
+        - name: APP_ENV
+          value: "production"
+        - name: APP_ENVIRONMENT_ONLY
+          value: "false"
+        - name: APP_URL
+          value: "{{ .Values.app.url }}"
+        - name: APP_TIMEZONE
+          value: "{{ .Values.app.tz }}"
+        - name: APP_SERVICE_AUTHOR
+          value: "{{ .Values.app.service_author }}"
+        - name: TRUSTED_PROXIES
+          value: "{{ .Values.app.trusted_proxies }}"
+
+        # DB settings
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: pterodactyl-panel
+        - name: DB_DATABASE
+          value: "{{ .Values.db.database }}"
+        - name: DB_HOST
+          value: "{{ .Values.db.database_host }}"
+        - name: DB_PORT
+          value: "{{ .Values.db.database_port | toString }}"
+          
+        # Redis settings
+        - name: CACHE_DRIVER
+          value: "{{ .Values.cache.cache_driver }}"
+        - name: SESSION_DRIVER
+          value: "{{ .Values.cache.session_driver }}"
+        - name: QUEUE_DRIVER
+          value: "{{ .Values.cache.queue_connection }}"
+        - name: REDIS_HOST
+          value: "{{ .Values.redis.redis_host }}"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: redis-password
+              name: pterodactyl-panel
+
+        # Volume settings
+        volumeMounts:
+        - mountPath: /app/var/
+          name: pterodactyl-app-content
+        - mountPath: /etc/nginx/http.d/
+          name: pterodactyl-nginx-content
+        - mountPath: /etc/letsencrypt/
+          name: pterodactyl-le-content
+        - mountPath: /app/storage/logs
+          name: pterodactyl-logs-content
+
+      volumes:
+      - name: pterodactyl-app-content
+        persistentVolumeClaim:
+          claimName:  pterodactyl-app-claim
+      - name: pterodactyl-nginx-content
+        persistentVolumeClaim:
+          claimName:  pterodactyl-nginx-claim
+      - name: pterodactyl-le-content
+        persistentVolumeClaim:
+          claimName:  pterodactyl-le-claim
+      - name: pterodactyl-logs-content
+        persistentVolumeClaim:
+          claimName:  pterodactyl-logs-claim

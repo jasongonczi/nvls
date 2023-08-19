@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pterodactyl-ingress
+  annotations:
+    # Specific annotation for cert-manager to identify which issuer to use
+    cert-manager.io/cluster-issuer: name-of-your-clusterissuer
+    # kubernetes.io/ingress.class: traefik might be necessary if you have multiple Ingress controllers in your cluster
+spec:
+  rules:
+  - host: panel.nvls.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pterodactyl
+            port:
+              number: 8080
+  - host: panel.gankmc.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pterodactyl
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - panel.nvls.cloud
+    - panel.gankmc.org
+    secretName: pterodactyl-tls-secret
