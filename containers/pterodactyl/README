@@ -1,7 +1,7 @@
-This container uses the official Pterodactyl Panel container (https://github.com/pterodactyl/panel/pkgs/container/panel) and implements the WemX Billing Module (https://wemx.net/)
+This container does not use the official Pterodactyl Panel container (https://github.com/pterodactyl/panel/pkgs/container/panel). It uses the ccarney16/pterodactyl-panel image and implements the WemX Billing Module (https://wemx.net/)
 
 A purchased key is required to run the module. Install script has been modified.
 
 These are important for insatll with modified script:
 LIC_KEY - license key purchased from wemx
-APP_DUR - directory where pterodactyl is stored (*/app* for official image)
+APP_DUR - directory where pterodactyl is stored (*/var/www/html* for ccarney16 image | */app* for official image)
