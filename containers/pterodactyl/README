@@ -4,4 +4,6 @@ A purchased key is required to run the module. Install script has been modified.
 
 These are important for insatll with modified script:
 LIC_KEY - license key purchased from wemx
-APP_DUR - directory where pterodactyl is stored (*/var/www/html* for ccarney16 image | */app* for official image)
+APP_DIR - directory where pterodactyl is stored (*/var/www/html* for ccarney16 image | */app* for official image)
+
+Other ENV Variables can be found on the official Pterodactyl github page
