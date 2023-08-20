@@ -4,8 +4,12 @@ on:
   push:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
+    paths:
+      - 'containers/pterodactyl/Dockerfile'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'containers/pterodactyl/Dockerfile'
 
 env:
   REGISTRY: ghcr.io
