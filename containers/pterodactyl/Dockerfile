@@ -9,6 +9,7 @@ COPY --from=builder /usr/bin/yarn /usr/bin/yarn
 ARG APP_DIR="/var/www/html"
 
 ENV APP_DIR_ENV=${APP_DIR}
+WORKDIR ${APP_DIR_ENV}
 ENV APP_KEY=SomeRandomStringSomeRandomString
 
 COPY module/BillingModule.php ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php
