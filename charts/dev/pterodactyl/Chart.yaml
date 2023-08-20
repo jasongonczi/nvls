@@ -6,16 +6,13 @@ keywords:
   - pterodactyl
   - panel
   - gaming
-home: https://github.com/your-repo-url # Replace with the URL to your chart's source code or home page
+home: https://github.com/JasonGonczi/nvls
 sources:
-  - https://github.com/your-repo-url # Replace with the URL to your chart's source code
+  - https://github.com/JasonGonczi/nvls/tree/main/charts
 maintainers:
-  - name: YourName
-    email: your.email@example.com
+  - name: NVLS
+    email: info@nvls.cloud
 dependencies:
-- name: nginx
-  version: 15.1.4
-  repository: "https://charts.bitnami.com/bitnami"
 - name: mariadb
   version: 13.0.4
   repository: "https://charts.bitnami.com/bitnami"

@@ -1,7 +1,4 @@
 dependencies:
-- name: nginx
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.1.4
 - name: mariadb
   repository: https://charts.bitnami.com/bitnami
   version: 13.0.4
