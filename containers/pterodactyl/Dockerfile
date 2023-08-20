@@ -16,4 +16,4 @@ COPY module/BillingModule.php ${APP_DIR_ENV}/app/Console/Commands/BillingModule.
 ARG INSTALL_STRIPE=false
 RUN if [ "$INSTALL_STRIPE" = "true" ]; then composer require stripe/stripe-php; fi
         
-RUN php artisan ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php
+RUN php artisan ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php 
