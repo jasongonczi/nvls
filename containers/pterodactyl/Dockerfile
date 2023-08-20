@@ -12,8 +12,8 @@ ENV APP_DIR_ENV=${APP_DIR}
 ENV APP_KEY=SomeRandomStringSomeRandomString
 
 COPY module/BillingModule.php ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php
+        
+RUN php artisan billing:install
 
 ARG INSTALL_STRIPE=false
 RUN if [ "$INSTALL_STRIPE" = "true" ]; then composer require stripe/stripe-php; fi
-        
-RUN php artisan ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php 
