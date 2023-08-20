@@ -45,7 +45,7 @@ jobs:
       with:
         context: ./containers/pterodactyl/
         push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PTERODACTYL_VERSION }}
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/pterodactyl:${{ env.PTERODACTYL_VERSION }}
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
@@ -61,7 +61,9 @@ jobs:
     - name: Sign the Docker Image
       if: github.event_name != 'pull_request'
       env:
+        TAGS: ${{ env.PTERODACTYL_VERSION }}
+        DIGEST: ${{ steps.build-and-push.outputs.digest }}
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
       run: |
-        cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
-
+        cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}/pterodactyl:${{ env.PTERODACTYL_VERSION }}
+        
