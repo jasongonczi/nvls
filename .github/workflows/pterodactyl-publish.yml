@@ -55,7 +55,16 @@ jobs:
       uses: sigstore/cosign-installer@6e04d228eb30da1757ee4e1dd75a0ec73a653e06 #v3.1.1
       with:
         cosign-release: 'v2.1.1'
-
-    - name: Sign the published Docker image
-      if: github.event_name != 'pull_request'
-      run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
+        
+    - name: cosign-installer
+      uses: sigstore/cosign-installer@v3.1.1
+      
+    - name: Write the Cosign private key to a file
+      run: echo "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
+      env:
+        COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        
+    - name: Sign the Docker Image
+      env:
+        COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+      run: cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.PTERODACTYL_VERSION }}
