@@ -61,9 +61,7 @@ jobs:
     - name: Sign the Docker Image
       if: github.event_name != 'pull_request'
       env:
-        TAGS: ${{ env.PTERODACTYL_VERSION }}
-        DIGEST: ${{ steps.build-and-push.outputs.digest }}
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
       run: |
-        cosign sign --key cosign.key ${{ env.DIGEST }}
+        cosign sign --key cosign.key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
 
