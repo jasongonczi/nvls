@@ -59,8 +59,8 @@ jobs:
         COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
         
     - name: Sign the Docker Image
+      if: github.event_name != 'pull_request'
       env:
         COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
       run: |
-        IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.PTERODACTYL_VERSION }})
-        cosign sign --key cosign.key $IMAGE_DIGEST
+        cosign sign --key cosign.key ${{ steps.build-and-push.outputs.digest }}
