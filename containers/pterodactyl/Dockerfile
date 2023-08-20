@@ -14,7 +14,12 @@ ENV APP_KEY=SomeRandomStringSomeRandomString
 
 COPY module/BillingModule.php ${APP_DIR_ENV}/app/Console/Commands/BillingModule.php
         
-RUN php artisan billing:install
+CMD ["php", "artisan", "billing:latest"]
 
 ARG INSTALL_STRIPE=false
 RUN if [ "$INSTALL_STRIPE" = "true" ]; then composer require stripe/stripe-php; fi
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 9000
+#Not actually sure if port 9000 is required; exposed in official container
