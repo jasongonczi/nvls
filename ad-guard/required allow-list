@@ -3,4 +3,5 @@ widgets.outbrain.com #Fox News App Feed
 api.foxnews.com
 
 #Security Appliances
-fortinet.com
+*.fortinet.com
+#www.fortinet.com
